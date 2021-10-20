@@ -8,8 +8,8 @@ socket.on("imagemessage", decodeReceived);
 function decodeReceived(data) {
   const img = new Image();
   img.src = `${data.file}`;
-  document.body.appendChild(img); //add image to client. works now
-  document.querySelector("#pic").style.backgroundImage = img; // replace image. NOT WORKING YET
+  //document.body.appendChild(img); //add image to client. works now
+  document.querySelector("#pic").style.backgroundImage = `url(${data.file})`; // replace image. NOT WORKING YET
 }
 
 //

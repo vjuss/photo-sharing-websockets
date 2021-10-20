@@ -3,44 +3,13 @@ let uploaded_image;
 let receivedImage;
 
 let socket = io.connect("http://localhost:3021");
-socket.on("imagemessage", decodeReceived);
+socket.on("imagemessage", showReceived);
 
-function decodeReceived(data) {
-  const img = new Image();
-  img.src = `${data.file}`;
-  //document.body.appendChild(img); //add image to client. works now
-  document.querySelector("#pic").style.backgroundImage = `url(${data.file})`; // replace image. NOT WORKING YET
+function showReceived(data) {
+  console.log("Receiving image from server");
+  document.querySelector("#pic").style.backgroundImage = `url(${data.file})`;
+  //reader.result=uploaded_image=data.file, all the same - this is now similar to url in load function
 }
-
-//
-
-// let bytes = new Uint8Array(arrayBuffer);
-// var blob = new Blob([bytes.buffer]);
-// let image = new Image();
-// let reader = new FileReader();
-// reader.onload = function (e) {
-//   image.src = e.target.result;
-//   document.body.appendChild(image);
-// };
-// reader.re
-
-// let blob = new Blob([data.file], { type: "image/png" });
-// const reader = new FileReader();
-
-// reader.onloadend = function () {
-//   receivedImage = reader.result;
-//   console.log(receivedImage); // this happens now after append is truggered
-//   show_image();
-// };
-//reader.readAsDataURL(blob);
-//reader.readAsDataURL(arrayBuffer);
-
-// function show_image() {
-//   console.log("append triggered");
-//   let image = new Image();
-//   image.src = receivedImage;
-//   document.body.appendChild(image);
-// }
 
 image_input.addEventListener("change", function () {
   const reader = new FileReader();
@@ -55,7 +24,6 @@ image_input.addEventListener("change", function () {
     };
     socket.emit("imagemessage", data);
   });
-
   reader.readAsDataURL(this.files[0]); // read as file
 });
 
